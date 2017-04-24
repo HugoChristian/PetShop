@@ -1,0 +1,55 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2017-03-24 22:25
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: Administrador
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+CREATE SCHEMA IF NOT EXISTS `BDVacinacao` DEFAULT CHARACTER SET utf8 ;
+
+CREATE TABLE IF NOT EXISTS `BDVacinacao`.`Vacina` (
+  `Tipo` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NULL DEFAULT NULL,
+  `Preco` DECIMAL(6) NULL DEFAULT NULL,
+  `Fornecedor` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Tipo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `BDVacinacao`.`Animal` (
+  `Codigo` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nome` VARCHAR(45) NULL DEFAULT NULL,
+  `Especie` VARCHAR(45) NULL DEFAULT NULL,
+  `Raca` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Codigo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `BDVacinacao`.`Vacinacao` (
+  `Tipo` INT(11) NOT NULL AUTO_INCREMENT,
+  `Vacina_Tipo` INT(11) NOT NULL,
+  `Animal_Codigo` INT(11) NOT NULL,
+  PRIMARY KEY (`Tipo`),
+  INDEX `fk_Vacinacao_Vacina_idx` (`Vacina_Tipo` ASC),
+  INDEX `fk_Vacinacao_Animal1_idx` (`Animal_Codigo` ASC),
+  CONSTRAINT `fk_Vacinacao_Vacina`
+    FOREIGN KEY (`Vacina_Tipo`)
+    REFERENCES `BDVacinacao`.`Vacina` (`Tipo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Vacinacao_Animal1`
+    FOREIGN KEY (`Animal_Codigo`)
+    REFERENCES `BDVacinacao`.`Animal` (`Codigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
